@@ -6,5 +6,6 @@ Alertmanager telegram receiver
 ## Example alerts:
 ![Alerts example](alerts.png)
 
-## Docker image
-`ghcr.io/a1fred/alertmanager-telegram`
+## Docker images
+ * amd64 `ghcr.io/a1fred/alertmanager-telegram:[latest|<version>]`
+ * arm64/v8 `ghcr.io/a1fred/alertmanager-telegram:[latest|<version>]-arm64`
