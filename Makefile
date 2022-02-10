@@ -44,7 +44,8 @@ alertmanager:
 	mkdir alertmanager
 	tar -xzvf alertmanager-0.23.0.darwin-amd64.tar.gz -C alertmanager/ --strip-components=1
 	rm alertmanager-0.23.0.darwin-amd64.tar.gz
-alertmanager_run:
+.PHONY: alertmanager_run
+alertmanager_run: alertmanager
 	alertmanager/alertmanager --config.file=alertmanager.yml --storage.path=alertmanager/data
 
 .PHONY: alert

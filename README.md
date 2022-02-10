@@ -34,3 +34,9 @@ $ docker run --rm \
 
 ## Healthcheck
 You can use `/health` endpoint, always responds `200`, can be useful for health-checking.
+
+# Development
+ * `make build` - build local binary
+ * `make alertmanager_run` - run local instance of alertmanager
+ * `make alert` - send dummy alert to alertmanager
+ * run `build/alertmanager-telegram --telegram.token=<test bot token> -r=<your telegram id>` for receive alerts
