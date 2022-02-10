@@ -3,13 +3,35 @@
 ```shell
 $ alertmanager-telegram --help
 alertmanager-telegram@unknown
-2022/02/10 17:17:36 option `--token' uses the same long name as option `--token'
+Usage:
+  main [OPTIONS] <daemon>
+
+Help Options:
+  -h, --help  Show this help message
+
+Available commands:
+  daemon  Daemon
+
 exit status 1
 ```
 ## Daemon
 ```shell
 $ alertmanager-telegram daemon --help
 alertmanager-telegram@unknown
-2022/02/10 17:17:38 option `--token' uses the same long name as option `--token'
+Usage:
+  main [OPTIONS] daemon [daemon-OPTIONS]
+
+Run daemon
+
+Help Options:
+  -h, --help                    Show this help message
+
+[daemon command options]
+          --listen=             Webhook listen (default: 127.0.0.1:8080) [$LISTEN]
+
+    Telegram daemon:
+          --telegram.token=     Telegram bot token [$TELEGRAM_TOKEN]
+      -r, --telegram.recipient= Telegram chat ids [$TELEGRAM_CHAT_ID]
+
 exit status 1
 ```

@@ -11,10 +11,6 @@ import (
 	"github.com/prometheus/alertmanager/notify/webhook"
 )
 
-type AlertmanagerOptions struct {
-	Url string `long:"url" description:"Alertmanager url" env:"URL" default:"http://127.0.0.1:9093"`
-}
-
 type TelegramOptions struct {
 	Token  string   `long:"token" description:"Telegram bot token" env:"TOKEN" required:"true"`
 	ChatId []string `short:"r" long:"recipient" description:"Telegram chat ids" env:"CHAT_ID"`
@@ -25,12 +21,10 @@ type Cmd struct {
 
 	Listen string `long:"listen" description:"Webhook listen" env:"LISTEN" default:"127.0.0.1:8080"`
 
-	alertmanagerOptions *AlertmanagerOptions
-	telegramOptions     *TelegramOptions
+	telegramOptions *TelegramOptions
 }
 
 func NewDaemonCmd(parser *flags.Parser, revision string) error {
-	alertmanagerOptions := &AlertmanagerOptions{}
 	telegramOptions := &TelegramOptions{}
 
 	command, err := parser.AddCommand(
@@ -38,23 +32,15 @@ func NewDaemonCmd(parser *flags.Parser, revision string) error {
 		"Daemon",
 		"Run daemon",
 		&Cmd{
-			revision:            revision,
-			alertmanagerOptions: alertmanagerOptions,
-			telegramOptions:     telegramOptions,
+			revision:        revision,
+			telegramOptions: telegramOptions,
 		},
 	)
 	if err != nil {
 		return err
 	}
 
-	g, err := command.AddGroup("Alertmanager", "Alertmanager options", alertmanagerOptions)
-	if err != nil {
-		return err
-	}
-	g.Namespace = "alertmanager"
-	g.EnvNamespace = "ALERTMANAGER"
-
-	g, err = command.AddGroup("Telegram daemon", "Telegram options", telegramOptions)
+	g, err := command.AddGroup("Telegram daemon", "Telegram options", telegramOptions)
 	if err != nil {
 		return err
 	}
