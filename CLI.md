@@ -31,7 +31,7 @@ Help Options:
 
     Telegram daemon:
           --telegram.token=     Telegram bot token [$TELEGRAM_TOKEN]
-      -r, --telegram.recipient= Telegram chat ids [$TELEGRAM_CHAT_ID]
+      -r, --telegram.recipient= Telegram chat ids, repeat -r to set multiple, for environment set comma separated ids [$TELEGRAM_CHAT_ID]
 
 exit status 1
 ```
