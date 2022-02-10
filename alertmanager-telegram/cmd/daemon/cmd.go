@@ -13,7 +13,7 @@ import (
 
 type TelegramOptions struct {
 	Token  string   `long:"token" description:"Telegram bot token" env:"TOKEN" required:"true"`
-	ChatId []string `short:"r" long:"recipient" description:"Telegram chat ids" env:"CHAT_ID"`
+	ChatId []string `short:"r" long:"recipient" description:"Telegram chat ids, repeat -r to set multiple, for environment set comma separated ids" env-delim:"," env:"CHAT_ID"`
 }
 
 type Cmd struct {

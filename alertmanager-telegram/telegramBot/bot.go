@@ -1,7 +1,6 @@
 package telegramBot
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -42,8 +41,6 @@ func RunBot(
 			if err != nil {
 				logger.Printf("Execute message template failed failed: %s\n", err)
 			}
-
-			fmt.Printf("%+v\n", botMessage)
 
 			for _, r := range recipients {
 				_, err = bot.Send(&r, botMessage, tele.ModeHTML)

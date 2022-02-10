@@ -32,7 +32,6 @@ func NewHttpServeMux(httpLogger *log.Logger, alertmanagerMessages chan<- webhook
 			return
 		}
 
-		httpLogger.Printf("Recevied: %d\n", len(message.Alerts))
 		alertmanagerMessages <- message
 		w.WriteHeader(http.StatusOK)
 	})
