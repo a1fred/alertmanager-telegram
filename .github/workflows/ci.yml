@@ -59,7 +59,7 @@ jobs:
     if: ${{ startsWith(github.ref, 'refs/tags/') }}
     needs:
      - test
-     - analyze
+    #  - analyze
 
     permissions:
       contents: write
