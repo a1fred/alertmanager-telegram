@@ -1,0 +1,12 @@
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 60s
+  repeat_interval: 5s
+  receiver: 'telegram'
+
+receivers:
+  - name: 'telegram'
+    webhook_configs:
+    - send_resolved: true
+      url: http://127.0.0.1:8080
