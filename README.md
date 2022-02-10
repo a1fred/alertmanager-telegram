@@ -26,7 +26,10 @@ Available commands:
 
 Example run
 ```shell
-$ docker run --rm -e TELEGRAM_TOKEN="<bot token>" -e TELEGRAM_CHAT_ID="<your chat id>" ghcr.io/a1fred/alertmanager-telegram
+$ docker run --rm \
+    -e TELEGRAM_TOKEN="<bot token>" \
+    -e TELEGRAM_CHAT_ID="<your chat id>" \
+    ghcr.io/a1fred/alertmanager-telegram
 ```
 
 ## Healthcheck
