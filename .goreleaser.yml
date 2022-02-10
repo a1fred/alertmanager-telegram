@@ -44,7 +44,7 @@ dockers:
     dockerfile: Dockerfile
     image_templates:
       - "ghcr.io/a1fred/alertmanager-telegram:latest-arm64"
-      - "ghcr.io/a1fred/alertmanager-telegram{{.Version}}-arm64"
+      - "ghcr.io/a1fred/alertmanager-telegram:{{.Version}}-arm64"
       - "ghcr.io/a1fred/alertmanager-telegram:{{ .Major }}-arm64"
       - "ghcr.io/a1fred/alertmanager-telegram:{{ .Major }}.{{ .Minor }}-arm64"
     build_flag_templates:
