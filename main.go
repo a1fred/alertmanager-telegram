@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/a1fred/alertmanager-telegram/src/cmd/daemon"
+	"github.com/a1fred/alertmanager-telegram/src/cmd/health"
 	"github.com/jessevdk/go-flags"
 )
 
@@ -21,6 +22,12 @@ func main() {
 
 	// server
 	err = daemon.NewDaemonCmd(parser, revision)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	// health
+	err = health.NewHealthCmd(parser, revision)
 	if err != nil {
 		log.Fatalln(err)
 	}

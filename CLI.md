@@ -4,13 +4,14 @@
 $ alertmanager-telegram --help
 alertmanager-telegram@unknown
 Usage:
-  main [OPTIONS] <daemon>
+  main [OPTIONS] <daemon | health>
 
 Help Options:
   -h, --help  Show this help message
 
 Available commands:
   daemon  Daemon
+  health  health
 
 exit status 1
 ```
@@ -33,6 +34,23 @@ Help Options:
     Telegram daemon:
           --telegram.token=     Telegram bot token [$TELEGRAM_TOKEN]
       -r, --telegram.recipient= Telegram chat ids, repeat -r to set multiple, for environment set comma separated ids [$TELEGRAM_CHAT_ID]
+
+exit status 1
+```
+## Health
+```shell
+$ alertmanager-telegram health --help
+alertmanager-telegram@unknown
+Usage:
+  main [OPTIONS] health [health-OPTIONS]
+
+Check daemon health
+
+Help Options:
+  -h, --help                 Show this help message
+
+[health command options]
+          --daemon_hostport= Daemon host:port (default: 127.0.0.1:8080) [$LISTEN]
 
 exit status 1
 ```

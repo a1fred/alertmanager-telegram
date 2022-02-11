@@ -9,7 +9,7 @@ all: lint test doc build
 
 .PHONY: clean
 clean:
-	rm -rf alertmanager-telegram cover.out alertmanager
+	rm -rf alertmanager-telegram cover.out alertmanager build
 
 lint:
 	golangci-lint run --timeout=2m0s
@@ -21,7 +21,7 @@ test: lint
 
 .PHONY: build
 build:
-	CGO_ENABLED=0 go build -ldflags "-X main.revision=$(REV) -s -w" -o $(TARGET)
+	CGO_ENABLED=0 go build -ldflags "-X main.revision=$(REV) -s -w" -o build/$(TARGET)
 
 .PHONY: doc
 doc:
@@ -38,9 +38,17 @@ doc:
 	sh -c "go run main.go daemon --help || true" >> $(DOCFILE) 2>&1
 	echo "\`\`\`" >> $(DOCFILE)
 
+	echo "## Health" >> $(DOCFILE)
+	echo "\`\`\`shell" >> $(DOCFILE)
+	echo "$$ $(TARGET) health --help" >> $(DOCFILE)
+	sh -c "go run main.go health --help || true" >> $(DOCFILE) 2>&1
+	echo "\`\`\`" >> $(DOCFILE)
+
 .PHONY: dockerbuild
 dockerbuild: build
-	docker build --rm -t $(TARGET) .
+	GOOS=linux CGO_ENABLED=0 go build -ldflags "-X main.revision=$(REV) -s -w" -o alertmanager-telegram
+	docker build --rm -t ghcr.io/a1fred/alertmanager-telegram .
+	rm alertmanager-telegram
 
 alertmanager:
 	wget https://github.com/prometheus/alertmanager/releases/download/v0.23.0/alertmanager-0.23.0.darwin-amd64.tar.gz
