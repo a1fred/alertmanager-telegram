@@ -8,7 +8,7 @@ Alertmanager telegram receiver
 
 ## Docker images
  * amd64 `ghcr.io/a1fred/alertmanager-telegram:[latest|<version>]`
- * arm64/v8 `ghcr.io/a1fred/alertmanager-telegram:[latest|<version>]-arm64`
+ * arm64/v8 `ghcr.io/a1fred/alertmanager-telegram-arm64v8:[latest|<version>]`
 
 Get help
 ```shell

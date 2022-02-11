@@ -43,10 +43,10 @@ dockers:
     use: buildx
     dockerfile: Dockerfile
     image_templates:
-      - "ghcr.io/a1fred/alertmanager-telegram:latest-arm64"
-      - "ghcr.io/a1fred/alertmanager-telegram:{{.Version}}-arm64"
-      - "ghcr.io/a1fred/alertmanager-telegram:{{ .Major }}-arm64"
-      - "ghcr.io/a1fred/alertmanager-telegram:{{ .Major }}.{{ .Minor }}-arm64"
+      - "ghcr.io/a1fred/alertmanager-telegram-arm64v8:latest"
+      - "ghcr.io/a1fred/alertmanager-telegram-arm64v8:{{.Version}}"
+      - "ghcr.io/a1fred/alertmanager-telegram-arm64v8:{{ .Major }}"
+      - "ghcr.io/a1fred/alertmanager-telegram-arm64v8:{{ .Major }}.{{ .Minor }}"
     build_flag_templates:
       - --platform=linux/arm64/v8
       - "--label=org.opencontainers.image.created={{.Date}}"
