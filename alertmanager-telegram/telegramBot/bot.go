@@ -21,7 +21,7 @@ func RunBot(
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 	})
 	if err != nil {
-		logger.Fatal(err)
+		logger.Fatalf("Bot initialize error: %s", err.Error())
 		return
 	}
 
