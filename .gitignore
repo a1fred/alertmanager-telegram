@@ -2,3 +2,4 @@ build
 cover.out
 .vscode
 /alertmanager
+# /alertmanager-telegram

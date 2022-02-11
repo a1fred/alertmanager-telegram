@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/a1fred/alertmanager-telegram/alertmanager-telegram/httpServer"
-	"github.com/a1fred/alertmanager-telegram/alertmanager-telegram/telegramBot"
+	"github.com/a1fred/alertmanager-telegram/src/httpServer"
+	"github.com/a1fred/alertmanager-telegram/src/telegramBot"
 	"github.com/jessevdk/go-flags"
 	"github.com/prometheus/alertmanager/notify/webhook"
 	"github.com/prometheus/client_golang/prometheus"

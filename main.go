@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/a1fred/alertmanager-telegram/alertmanager-telegram/cmd/daemon"
+	"github.com/a1fred/alertmanager-telegram/src/cmd/daemon"
 	"github.com/jessevdk/go-flags"
 )
 

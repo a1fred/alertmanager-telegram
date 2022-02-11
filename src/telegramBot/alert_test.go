@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/a1fred/alertmanager-telegram/alertmanager-telegram/telegramBot"
+	"github.com/a1fred/alertmanager-telegram/src/telegramBot"
 	"github.com/jaswdr/faker"
 
 	"github.com/prometheus/alertmanager/notify/webhook"

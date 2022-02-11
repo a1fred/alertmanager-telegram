@@ -53,4 +53,4 @@ alertmanager_telegram_messages_sent 3
  * `make build` - build local binary
  * `make alertmanager_run` - run local instance of alertmanager
  * `make alert` - send dummy alert to alertmanager
- * run `build/alertmanager-telegram --telegram.token=<test bot token> -r=<your telegram id>` for receive alerts
+ * run `alertmanager-telegram --telegram.token=<test bot token> -r=<your telegram id>` for receive alerts

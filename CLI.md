@@ -28,6 +28,7 @@ Help Options:
 
 [daemon command options]
           --listen=             Webhook listen (default: 127.0.0.1:8080) [$LISTEN]
+          --timezone=           Change alerts timezone to (default: UTC) [$TZ]
 
     Telegram daemon:
           --telegram.token=     Telegram bot token [$TELEGRAM_TOKEN]
