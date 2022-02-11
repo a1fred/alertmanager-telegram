@@ -13,6 +13,7 @@ func RunBot(
 	token string,
 	alertmanagerMessages <-chan webhook.Message,
 	recipients []Recipient,
+	tz *time.Location,
 	logger *log.Logger,
 	messagesSentCounter, messagesSendingErrorCounter prometheus.Counter,
 ) {
@@ -27,7 +28,7 @@ func RunBot(
 
 	go func() {
 		for message := range alertmanagerMessages {
-			botMessage, err := FormatAlertHtml(message)
+			botMessage, err := FormatAlertHtml(message, tz)
 			if err != nil {
 				logger.Printf("Execute message template failed failed: %s\n", err)
 				messagesSendingErrorCounter.Inc()

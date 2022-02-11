@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/a1fred/alertmanager-telegram/alertmanager-telegram/httpServer"
 	"github.com/a1fred/alertmanager-telegram/alertmanager-telegram/telegramBot"
@@ -21,7 +22,8 @@ type TelegramOptions struct {
 type Cmd struct {
 	revision string
 
-	Listen string `long:"listen" description:"Webhook listen" env:"LISTEN" default:"127.0.0.1:8080"`
+	Listen   string `long:"listen" description:"Webhook listen" env:"LISTEN" default:"127.0.0.1:8080"`
+	Timezone string `long:"timezone" description:"Change alerts timezone to" env:"TZ" default:"UTC"`
 
 	telegramOptions *TelegramOptions
 }
@@ -57,6 +59,11 @@ func (s *Cmd) Execute(args []string) error {
 		log.Fatal("Please specify some recipient ids")
 	}
 
+	tz, err := time.LoadLocation(s.Timezone)
+	if err != nil {
+		log.Fatalf("Timezone error: %s", err.Error())
+	}
+
 	recipients := make([]telegramBot.Recipient, 0)
 	for _, r := range s.telegramOptions.ChatId {
 		recipients = append(recipients, *telegramBot.NewRecipient(r))
@@ -85,6 +92,7 @@ func (s *Cmd) Execute(args []string) error {
 		s.telegramOptions.Token,
 		alertmanagerMessages,
 		recipients,
+		tz,
 		teleLogger,
 		messagesSentCounter,
 		messagesSendingErrorCounter,

@@ -38,13 +38,14 @@ var alertHtmlTemplate = `
 `
 
 var messageTemplate *template.Template
+var tz *time.Location
 
 func init() {
 	var err error
 	messageTemplate = template.New("").Funcs(template.FuncMap{
 		"toUpper": strings.ToUpper,
 		"timeFormat": func(t time.Time) string {
-			return t.Format("Mon, 02 Jan 2006 15:04:05 MST")
+			return t.In(tz).Format("Mon, 02 Jan 2006 15:04:05 MST")
 		},
 		"since": func(t time.Time) string {
 			return time.Since(t).Round(time.Second).String()
@@ -59,7 +60,9 @@ func init() {
 	}
 }
 
-func FormatAlertHtml(message webhook.Message) (string, error) {
+func FormatAlertHtml(message webhook.Message, toTz *time.Location) (string, error) {
+	tz = toTz
+
 	tpl := bytes.Buffer{}
 
 	err := messageTemplate.Execute(&tpl, message)

@@ -59,7 +59,7 @@ func FakeWebhookMessage() webhook.Message {
 }
 
 func TestFormatAlertHtml(t *testing.T) {
-	msg, err := telegramBot.FormatAlertHtml(FakeWebhookMessage())
+	msg, err := telegramBot.FormatAlertHtml(FakeWebhookMessage(), time.UTC)
 	assert.NoError(t, err)
 	assert.NotZero(t, msg)
 }
