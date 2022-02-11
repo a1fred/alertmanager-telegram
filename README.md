@@ -35,6 +35,20 @@ $ docker run --rm \
 ## Healthcheck
 You can use `/health` endpoint, always responds `200`, can be useful for health-checking.
 
+## Metrics
+prometheus metrics available on `/metrics` endpoint
+```
+# HELP alertmanager_telegram_alerts_received Number of alerts received
+# TYPE alertmanager_telegram_alerts_received counter
+alertmanager_telegram_alerts_received 3
+# HELP alertmanager_telegram_messages_sending_error Number of errors message sending to telegram recipients
+# TYPE alertmanager_telegram_messages_sending_error counter
+alertmanager_telegram_messages_sending_error 0
+# HELP alertmanager_telegram_messages_sent Number of messages sent to telegram recipients
+# TYPE alertmanager_telegram_messages_sent counter
+alertmanager_telegram_messages_sent 3
+```
+
 # Development
  * `make build` - build local binary
  * `make alertmanager_run` - run local instance of alertmanager

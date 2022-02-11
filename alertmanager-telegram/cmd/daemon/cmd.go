@@ -9,6 +9,8 @@ import (
 	"github.com/a1fred/alertmanager-telegram/alertmanager-telegram/telegramBot"
 	"github.com/jessevdk/go-flags"
 	"github.com/prometheus/alertmanager/notify/webhook"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type TelegramOptions struct {
@@ -60,6 +62,21 @@ func (s *Cmd) Execute(args []string) error {
 		recipients = append(recipients, *telegramBot.NewRecipient(r))
 	}
 
+	promRegistry := prometheus.NewRegistry()
+	alertsReceivedCounter := prometheus.NewCounter(prometheus.CounterOpts{
+		Name: "alertmanager_telegram_alerts_received",
+		Help: "Number of alerts received",
+	})
+	messagesSentCounter := prometheus.NewCounter(prometheus.CounterOpts{
+		Name: "alertmanager_telegram_messages_sent",
+		Help: "Number of messages sent to telegram recipients",
+	})
+	messagesSendingErrorCounter := prometheus.NewCounter(prometheus.CounterOpts{
+		Name: "alertmanager_telegram_messages_sending_error",
+		Help: "Number of errors message sending to telegram recipients",
+	})
+	promRegistry.MustRegister(alertsReceivedCounter, messagesSentCounter, messagesSendingErrorCounter)
+
 	httpLogger := log.New(os.Stdout, "   [http]    ", log.LstdFlags)
 	teleLogger := log.New(os.Stdout, " [telegram]  ", log.LstdFlags)
 	alertmanagerMessages := make(chan webhook.Message)
@@ -69,9 +86,12 @@ func (s *Cmd) Execute(args []string) error {
 		alertmanagerMessages,
 		recipients,
 		teleLogger,
+		messagesSentCounter,
+		messagesSendingErrorCounter,
 	)
 
-	serveMux := httpServer.NewHttpServeMux(httpLogger, alertmanagerMessages)
+	serveMux := httpServer.NewHttpServeMux(httpLogger, alertmanagerMessages, alertsReceivedCounter)
+	serveMux.Handle("/metrics", promhttp.HandlerFor(promRegistry, promhttp.HandlerOpts{}))
 	httpLogger.Printf("Http listen: http://%s\n", s.Listen)
 	return http.ListenAndServe(s.Listen, serveMux)
 }
