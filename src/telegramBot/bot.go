@@ -26,28 +26,27 @@ func RunBot(
 		return
 	}
 
-	go func() {
-		for message := range alertmanagerMessages {
-			botMessage, err := FormatAlertHtml(message, tz)
+	logger.Printf("Running telegram bot with %d recipients\n", len(recipients))
+
+	for message := range alertmanagerMessages {
+		botMessage, err := FormatAlertHtml(message, tz)
+		if err != nil {
+			logger.Printf("Execute message template failed failed: %s\n", err)
+			messagesSendingErrorCounter.Inc()
+			continue
+		}
+
+		for _, r := range recipients {
+			_, err = bot.Send(&r, botMessage, tele.ModeHTML)
 			if err != nil {
-				logger.Printf("Execute message template failed failed: %s\n", err)
+				logger.Printf("Send message to %s failed: %s\n", r.Recipient(), err)
 				messagesSendingErrorCounter.Inc()
 				continue
 			}
-
-			for _, r := range recipients {
-				_, err = bot.Send(&r, botMessage, tele.ModeHTML)
-				if err != nil {
-					logger.Printf("Send message to %s failed: %s\n", r.Recipient(), err)
-					messagesSendingErrorCounter.Inc()
-					continue
-				}
-				messagesSentCounter.Inc()
-			}
+			messagesSentCounter.Inc()
 		}
-	}()
+	}
 
-	logger.Printf("Running telegram bot with %d recipients\n", len(recipients))
-
-	bot.Start()
+	// Muliple bot instances failed when polling enabled
+	// bot.Start()
 }
